@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agroveterinaria La Yunta</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Sistema administrativo</p>
+      <h1>Agroveterinaria La Yunta</h1>
+    </div>
+    <div class="status-pill" id="serverStatus">Verificando servidor...</div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <button class="nav-button active" data-section="dashboard">Resumen</button>
+      <button class="nav-button" data-section="clientes">Clientes</button>
+      <button class="nav-button" data-section="mascotas">Mascotas</button>
+      <button class="nav-button" data-section="productos">Productos</button>
+      <button class="nav-button" data-section="inventario">Inventario</button>
+      <button class="nav-button" data-section="ventas">Ventas</button>
+      <button class="nav-button" data-section="citas">Citas</button>
+      <button class="nav-button" data-section="transacciones">Transacciones</button>
+      <button class="nav-button" data-section="reportes">Reportes</button>
+    </aside>
+
+    <section class="content">
+      <section class="panel visible" id="dashboard">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Vista general</p>
+            <h2>Panel principal</h2>
+          </div>
+          <button id="loadAllButton">Actualizar resumen</button>
+        </div>
+
+        <div class="summary-grid">
+          <article class="summary-card">
+            <span>Clientes</span>
+            <strong id="countClientes">0</strong>
+          </article>
+          <article class="summary-card">
+            <span>Mascotas</span>
+            <strong id="countMascotas">0</strong>
+          </article>
+          <article class="summary-card">
+            <span>Productos</span>
+            <strong id="countProductos">0</strong>
+          </article>
+          <article class="summary-card">
+            <span>Citas</span>
+            <strong id="countCitas">0</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="clientes" data-endpoint="/api/clientes">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Modulo</p>
+            <h2>Clientes</h2>
+          </div>
+          <button class="load-button">Actualizar clientes</button>
+        </div>
+        <form class="data-form" data-endpoint="/api/clientes/completo" data-reload-panel="clientes" data-refresh-selects="true">
+          <div class="form-grid">
+            <label>Cedula<input name="cedula" required maxlength="11"></label>
+            <label>Nombre<input name="nombre" required maxlength="60"></label>
+            <label>Primer apellido<input name="apellido1" required maxlength="40"></label>
+            <label>Segundo apellido<input name="apellido2" maxlength="40"></label>
+            <label>Fecha nacimiento<input name="fecha_nacimiento" type="date" required></label>
+            <label>Direccion<input name="direccion" maxlength="120"></label>
+            <label>Id cliente<input name="id_cliente" required maxlength="10"></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Registrar cliente</button>
+          </div>
+        </form>
+        <div class="table-wrap"><table><thead></thead><tbody></tbody></table></div>
+      </section>
+
+      <section class="panel" id="mascotas" data-endpoint="/api/mascotas">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Modulo</p>
+            <h2>Mascotas</h2>
+          </div>
+          <button class="load-button">Actualizar mascotas</button>
+        </div>
+        <form class="data-form" data-endpoint="/api/mascotas" data-reload-panel="mascotas" data-refresh-selects="true">
+          <div class="form-grid">
+            <label>Id mascota<input name="id_mascota" required maxlength="10"></label>
+            <label>Cliente<select name="id_cliente" id="selectClienteMascota" required></select></label>
+            <label>Nombre<input name="nombre" required maxlength="40"></label>
+            <label>Especie<input name="especie" required maxlength="30"></label>
+            <label>Peso<input name="peso" type="number" min="0"></label>
+            <label>Genero<select name="genero" required>
+              <option value="">Seleccione...</option>
+              <option value="Macho">Macho</option>
+              <option value="Hembra">Hembra</option>
+            </select></label>
+            <label>Fecha nacimiento<input name="fecha_nacimiento" type="date"></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Registrar mascota</button>
+          </div>
+        </form>
+        <div class="table-wrap"><table><thead></thead><tbody></tbody></table></div>
+      </section>
+
+      <section class="panel" id="productos" data-endpoint="/api/productos">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Modulo</p>
+            <h2>Productos</h2>
+          </div>
+          <button class="load-button">Actualizar productos</button>
+        </div>
+        <form class="data-form" data-endpoint="/api/productos" data-reload-panel="productos">
+          <div class="form-grid">
+            <label>Id producto<input name="id_producto" required maxlength="10"></label>
+            <label>Nombre<input name="nombre" required maxlength="60"></label>
+            <label>Tipo<select name="tipo" required>
+              <option value="">Seleccione...</option>
+              <option value="Veterinario">Veterinario</option>
+              <option value="Agroquimico">Agroquimico</option>
+              <option value="Concentrado">Concentrado</option>
+              <option value="Herramienta">Herramienta</option>
+              <option value="Otro">Otro</option>
+            </select></label>
+            <label>Precio<input name="precio" type="number" min="0" required></label>
+            <label>Fecha registro<input name="fecha_registro" type="date"></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Registrar producto</button>
+          </div>
+        </form>
+        <div class="table-wrap"><table><thead></thead><tbody></tbody></table></div>
+      </section>
+
+      <section class="panel" id="inventario" data-endpoint="/api/inventario">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Modulo</p>
+            <h2>Inventario</h2>
+          </div>
+          <button class="load-button">Actualizar inventario</button>
+        </div>
+        <div class="table-wrap"><table><thead></thead><tbody></tbody></table></div>
+      </section>
+
+      <section class="panel" id="ventas" data-endpoint="/api/ventas">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Modulo</p>
+            <h2>Ventas</h2>
+          </div>
+          <button class="load-button">Actualizar ventas</button>
+        </div>
+        <h3 class="form-title">Registrar venta completa</h3>
+        <form class="data-form" data-endpoint="/api/transacciones/venta-completa" data-reload-panel="ventas" data-refresh-selects="true">
+          <div class="form-grid">
+            <label>Id venta<input name="id_venta" required maxlength="10"></label>
+            <label>Usuario<select name="id_usuario" class="select-usuarios" required></select></label>
+            <label>Producto<select name="id_producto" class="select-productos" required></select></label>
+            <label>Cantidad<input name="cantidad" type="number" min="1" required></label>
+            <label>Id pago<input name="id_pago" required maxlength="10"></label>
+            <label>Metodo pago<select name="metodo_pago" required>
+              <option value="">Seleccione...</option>
+              <option value="Efectivo">Efectivo</option>
+              <option value="Tarjeta">Tarjeta</option>
+              <option value="SINPE">SINPE</option>
+            </select></label>
+            <label>Estado pago<select name="estado_pago" required>
+              <option value="Pendiente">Pendiente</option>
+              <option value="Aprobado" selected>Aprobado</option>
+              <option value="Rechazado">Rechazado</option>
+            </select></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Registrar venta completa</button>
+          </div>
+        </form>
+        <div class="table-wrap"><table><thead></thead><tbody></tbody></table></div>
+      </section>
+
+      <section class="panel" id="citas" data-endpoint="/api/citas">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Modulo</p>
+            <h2>Citas</h2>
+          </div>
+          <button class="load-button">Actualizar citas</button>
+        </div>
+        <form class="data-form" data-endpoint="/api/citas" data-reload-panel="citas">
+          <div class="form-grid">
+            <label>Id cita<input name="id_cita" required maxlength="10"></label>
+            <label>Mascota<select name="id_mascota" id="selectMascotaCita" required></select></label>
+            <label>Fecha cita<input name="fecha_cita" type="date" required></label>
+            <label>Hora<input name="hora" type="time" required></label>
+            <label class="wide">Motivo<input name="motivo" maxlength="150"></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Registrar cita</button>
+          </div>
+        </form>
+        <div class="table-wrap"><table><thead></thead><tbody></tbody></table></div>
+      </section>
+
+      <section class="panel" id="transacciones">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Operaciones especiales</p>
+            <h2>Transacciones</h2>
+          </div>
+        </div>
+        <h3 class="form-title">Pedido completo</h3>
+        <form class="data-form" data-endpoint="/api/transacciones/pedido-completo">
+          <div class="form-grid">
+            <label>Id pedido<input name="id_pedido" required maxlength="10"></label>
+            <label>Cliente<select name="id_cliente" class="select-clientes" required></select></label>
+            <label>Producto<select name="id_producto" class="select-productos" required></select></label>
+            <label>Tipo entrega<select name="tipo_entrega" required>
+              <option value="">Seleccione...</option>
+              <option value="Recoger">Recoger</option>
+              <option value="Domicilio">Domicilio</option>
+            </select></label>
+            <label>Estado<select name="estado" required>
+              <option value="Pendiente" selected>Pendiente</option>
+              <option value="Preparacion">Preparacion</option>
+              <option value="Entregado">Entregado</option>
+              <option value="Cancelado">Cancelado</option>
+            </select></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Registrar pedido completo</button>
+          </div>
+        </form>
+
+        <h3 class="form-title">Producto con inventario</h3>
+        <form class="data-form" data-endpoint="/api/transacciones/producto-inventario" data-reload-panel="inventario" data-refresh-selects="true">
+          <div class="form-grid">
+            <label>Id producto<input name="id_producto" required maxlength="10"></label>
+            <label>Nombre<input name="nombre" required maxlength="60"></label>
+            <label>Tipo<select name="tipo" required>
+              <option value="">Seleccione...</option>
+              <option value="Veterinario">Veterinario</option>
+              <option value="Agroquimico">Agroquimico</option>
+              <option value="Concentrado">Concentrado</option>
+              <option value="Herramienta">Herramienta</option>
+              <option value="Otro">Otro</option>
+            </select></label>
+            <label>Precio<input name="precio" type="number" min="0" required></label>
+            <label>Id inventario<input name="id_inventario" required maxlength="10"></label>
+            <label>Fecha inventario<input name="fecha_inventario" type="date"></label>
+            <label>Stock actual<input name="stock_actual" type="number" min="0" required></label>
+            <label>Ubicacion<input name="ubicacion" maxlength="50"></label>
+            <label>Fecha registro<input name="fecha_registro" type="date"></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Registrar producto con inventario</button>
+          </div>
+        </form>
+
+        <h3 class="form-title">Cita con procedimiento</h3>
+        <form class="data-form" data-endpoint="/api/transacciones/cita-procedimiento" data-reload-panel="citas">
+          <div class="form-grid">
+            <label>Id cita<input name="id_cita" required maxlength="10"></label>
+            <label>Mascota<select name="id_mascota" class="select-mascotas" required></select></label>
+            <label>Fecha cita<input name="fecha_cita" type="date" required></label>
+            <label>Hora<input name="hora" type="time" required></label>
+            <label>Motivo<input name="motivo" maxlength="150" required></label>
+            <label>Id procedimiento<input name="id_procedimiento" required maxlength="10"></label>
+            <label>Usuario<select name="id_usuario" class="select-usuarios" required></select></label>
+            <label>Descripcion<input name="descripcion" required maxlength="150"></label>
+            <label>Fecha procedimiento<input name="fecha_procedimiento" type="date"></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Registrar cita con procedimiento</button>
+          </div>
+        </form>
+
+        <h3 class="form-title">Procesar pago</h3>
+        <form class="data-form" data-endpoint="/api/transacciones/procesar-pago" data-reload-panel="ventas">
+          <div class="form-grid">
+            <label>Id pago<input name="id_pago" required maxlength="10"></label>
+            <label>Venta<select name="id_venta" class="select-ventas" required></select></label>
+            <label>Monto<input name="monto" type="number" min="1" required></label>
+            <label>Metodo pago<select name="metodo_pago" required>
+              <option value="">Seleccione...</option>
+              <option value="Efectivo">Efectivo</option>
+              <option value="Tarjeta">Tarjeta</option>
+              <option value="SINPE">SINPE</option>
+            </select></label>
+            <label>Fecha pago<input name="fecha_pago" type="date"></label>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Procesar pago</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" id="reportes">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Vistas SQL</p>
+            <h2>Reportes</h2>
+          </div>
+        </div>
+
+        <div class="report-actions">
+          <button class="report-button" data-endpoint="/api/reportes/ventas-detalle">Ventas detalle</button>
+          <button class="report-button" data-endpoint="/api/reportes/citas-mascotas-clientes">Citas, mascotas y clientes</button>
+          <button class="report-button" data-endpoint="/api/reportes/inventario-productos">Inventario y productos</button>
+        </div>
+
+        <div class="table-wrap"><table><thead></thead><tbody></tbody></table></div>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

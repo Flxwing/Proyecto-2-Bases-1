@@ -1,0 +1,27 @@
+{
+  "name": "agroveterinaria-la-yunta-app",
+  "version": "1.0.0",
+  "description": "Aplicacion web para administrar consultas de Agroveterinaria La Yunta con Node.js, Express y SQL Server.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "express",
+    "sql-server",
+    "mssql",
+    "agroveterinaria"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mssql": "^11.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
