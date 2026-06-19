@@ -137,6 +137,25 @@ http://localhost:3000/api/health
 
 Si todo funciona correctamente, debe devolver información de la base de datos conectada.
 
+## Problemas comunes de conexión
+
+Si la aplicación inicia correctamente, pero no logra conectarse a SQL Server, se recomienda revisar lo siguiente:
+
+1. Verificar que la base de datos `BD_AgroveterinariaLaYunta` exista en SQL Server.
+2. Confirmar que el archivo `.env` tenga los datos correctos de conexión.
+3. Verificar que el usuario `app_layunta` exista en SQL Server y tenga permisos sobre la base de datos.
+4. Revisar que SQL Server tenga habilitado el protocolo TCP/IP.
+5. Confirmar que SQL Server esté escuchando en el puerto `1433`.
+
+Para verificar la conexión desde la app, se puede abrir:
+
+```txt
+http://localhost:3000/api/health
+```
+
+Si la conexión funciona, la ruta debe devolver información de la base de datos y del servidor SQL.
+
+
 ## Estructura del proyecto
 
 ```txt
